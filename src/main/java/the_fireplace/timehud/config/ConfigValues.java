@@ -8,7 +8,11 @@ public class ConfigValues {
 	public static String LOCATION;
 	public static final String LOCATION_NAME = "cfg.location";
 
-	public static final String FORMAT_DEFAULT = "24HH:MM:SS-BR-MONTHNAME DATE, YEAR";
+	public static final String FORMAT_DEFAULT = "24HH:MMBRNAME DATE, YEAR";
 	public static String FORMAT;
 	public static final String FORMAT_NAME = "cfg.format";
+
+	public static final boolean REAL_DEFAULT = false;
+	public static boolean REAL;
+	public static final String REAL_NAME = "cfg.real";
 }
