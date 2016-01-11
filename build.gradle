@@ -19,28 +19,28 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 curseforge {
-  apiKey = '98d48d8e-6c96-4bb6-a2dd-2f7d0f33180d' // This should really be in a gradle.properties file
+  apiKey = project.curseForgeApiKey
   project {
     id = '239110'
     changelog = file('changelog.txt')
-    releaseType = 'beta'
-	addGameVersion '1.8.8'
+    releaseType = 'release'
+	addGameVersion '1.8.9'
     mainArtifact(jar) {
       relations {
-        optionalLibrary 'notenoughitems'
+        
       }
     }    
   }
 }
 
 version = "!!VERSION!!"
-group= "the_fireplace.timehud" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "the_fireplace.timehud"
 archivesBaseName = "TimeHUD"
 
 minecraft {
-    version = "1.8.8-11.15.0.1609-1.8.8"
+    version = "1.8.9-11.15.0.1673"
     runDir = "run"
-    mappings = "snapshot_20151122"
+    mappings = "stable_20"
 }
 
 dependencies {
