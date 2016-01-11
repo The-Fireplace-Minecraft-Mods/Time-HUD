@@ -27,6 +27,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.*;
 import java.net.URL;
@@ -46,7 +48,7 @@ public class VersionChecker implements IModGuiFactory {
 	private static String HostVERSION;
 	static final String MODID=HostMODID+"vc";
 	static final String MODNAME=HostMODNAME+" Version Checker";
-	static final String VERSION="1.3";
+	static final String VERSION="1.4";
 	private String curseCode, latest="0.0.0.0";
 
 	private static Configuration config;
@@ -128,7 +130,8 @@ public class VersionChecker implements IModGuiFactory {
 	public void init(FMLInitializationEvent event){
 		HostVERSION=TimeHud.VERSION;
 		tryNotifyDynious();
-		MinecraftForge.EVENT_BUS.register(this);
+		if(event.getSide().isClient())
+			MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@EventHandler
@@ -137,6 +140,7 @@ public class VersionChecker implements IModGuiFactory {
 			tryNotifyServer();
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onPlayerJoinClient(final ClientConnectedToServerEvent event){
 		(new Thread(){
@@ -153,6 +157,7 @@ public class VersionChecker implements IModGuiFactory {
 		}).start();
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent event){
 		if(event.modID.equals(MODID))
