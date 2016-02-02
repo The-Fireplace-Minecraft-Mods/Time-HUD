@@ -66,7 +66,7 @@ public class ForgeEvents {
 				long hour = 1, minute = 0, second = 0;
 				long daylength = 24000;
 				long worldtime = mc.theWorld.getWorldTime();
-				long daycount = worldtime/daylength;
+				long daycount = (long)Math.floor(worldtime/daylength);
 				long remainingticks = worldtime%daylength;
 				String[] names = new String[]{StatCollector.translateToLocal("january"), StatCollector.translateToLocal("february"), StatCollector.translateToLocal("march"), StatCollector.translateToLocal("april"), StatCollector.translateToLocal("may"), StatCollector.translateToLocal("june"), StatCollector.translateToLocal("july"), StatCollector.translateToLocal("august"), StatCollector.translateToLocal("september"), StatCollector.translateToLocal("october"), StatCollector.translateToLocal("november"), StatCollector.translateToLocal("december")};
 				while(daycount > 365){
@@ -117,7 +117,7 @@ public class ForgeEvents {
 					daycount -= 30;
 					month++;
 				}
-				day = daycount;
+				day = daycount+1;
 
 				while(remainingticks >= 1000){
 					remainingticks -= 1000;
