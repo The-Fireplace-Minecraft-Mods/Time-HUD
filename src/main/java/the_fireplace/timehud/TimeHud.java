@@ -14,7 +14,7 @@ import the_fireplace.timehud.config.LocationEntries;
 
 import java.util.Map;
 
-@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true)
+@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true)
 public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";
