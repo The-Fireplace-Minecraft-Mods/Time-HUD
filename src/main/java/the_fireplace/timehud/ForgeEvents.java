@@ -63,7 +63,7 @@ public class ForgeEvents {
 				}
 			}else{
 				long month = 1, day = 1, year = 1;
-				long hour = 1, minute = 0, second = 0;
+				long hour = 6, minute = 0, second = 0;
 				long daylength = 24000;
 				long worldtime = mc.theWorld.getWorldTime();
 				long daycount = (long)Math.floor(worldtime/daylength);
@@ -122,6 +122,8 @@ public class ForgeEvents {
 				while(remainingticks >= 1000){
 					remainingticks -= 1000;
 					hour++;
+					if(hour > 24)
+						hour -= 24;
 				}
 				remainingticks *= 3;//60 ticks per second, allows for even division into minutes
 				while (remainingticks >= 50){
