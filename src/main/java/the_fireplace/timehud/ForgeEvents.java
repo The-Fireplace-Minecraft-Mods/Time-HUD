@@ -168,7 +168,7 @@ public class ForgeEvents {
 				if(d2.contains("NAME"))
 					d2 = d2.replace("NAME", names[(int)month-1]);
 				if(d2.contains("ZZ")) {
-					if(hour > 11)
+					if(hour > 11 && hour < 24)
 						d2 = d2.replace("ZZ", "PM");
 					else
 						d2 = d2.replace("ZZ", "AM");
