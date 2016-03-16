@@ -176,7 +176,8 @@ public class ForgeEvents {
 			}
 			String[] d3 = d2.split("BR");
 			mc.ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, d3[0], x, y, -1);
-			mc.ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, d3[1], x, y+12, -1);
+			if(d3.length > 1)
+				mc.ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, d3[1], x, y+12, -1);
 			}
 		}
 	@SubscribeEvent

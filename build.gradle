@@ -25,11 +25,8 @@ curseforge {
     changelog = file('changelog.txt')
     releaseType = 'release'
 	addGameVersion '1.8.9'
-    mainArtifact(jar) {
-      relations {
-        
-      }
-    }    
+	addGameVersion 'Java 8'
+    mainArtifact jar 
   }
 }
 
