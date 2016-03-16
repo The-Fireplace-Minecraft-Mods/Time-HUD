@@ -2,6 +2,8 @@ package the_fireplace.timehud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,6 +17,8 @@ public class ForgeEvents {
 	public void guiRender(TickEvent.RenderTickEvent t){
 		Minecraft mc = Minecraft.getMinecraft();
 		if(mc.inGameHasFocus){
+			if(ConfigValues.NEEDCLOCK && !hasClock())
+				return;
 			ScaledResolution res = new ScaledResolution(mc);
 			int width = res.getScaledWidth();
 			int height = res.getScaledHeight();
@@ -184,5 +188,12 @@ public class ForgeEvents {
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
 		if(eventArgs.modID.equals(TimeHud.MODID))
 			TimeHud.syncConfig();
+	}
+	boolean hasClock(){
+		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
+			if(stack != null)
+				if(stack.getItem().equals(Items.clock))
+					return true;
+		return false;
 	}
 }

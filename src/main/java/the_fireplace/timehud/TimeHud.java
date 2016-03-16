@@ -28,11 +28,13 @@ public class TimeHud {
 	public static Property LOCATION_PROPERTY;
 	public static Property FORMAT_PROPERTY;
 	public static Property REAL_PROPERTY;
+	public static Property NEEDCLOCK_PROPERTY;
 
 	public static void syncConfig(){
 		ConfigValues.LOCATION = LOCATION_PROPERTY.getString();
 		ConfigValues.FORMAT = FORMAT_PROPERTY.getString();
 		ConfigValues.REAL = REAL_PROPERTY.getBoolean();
+		ConfigValues.NEEDCLOCK = NEEDCLOCK_PROPERTY.getBoolean();
 
 		if(config.hasChanged())
 			config.save();
@@ -50,6 +52,7 @@ public class TimeHud {
 		LOCATION_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.LOCATION_NAME, ConfigValues.LOCATION_DEFAULT, StatCollector.translateToLocal(ConfigValues.LOCATION_NAME+".tooltip"));
 		FORMAT_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FORMAT_NAME, ConfigValues.FORMAT_DEFAULT, StatCollector.translateToLocal(ConfigValues.FORMAT_NAME+".tooltip"));
 		REAL_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.REAL_NAME, ConfigValues.REAL_DEFAULT, StatCollector.translateToLocal(ConfigValues.REAL_NAME+".tooltip"));
+		NEEDCLOCK_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.NEEDCLOCK_NAME, ConfigValues.NEEDCLOCK_DEFAULT, StatCollector.translateToLocal(ConfigValues.NEEDCLOCK_NAME+".tooltip"));
 		LOCATION_PROPERTY.setConfigEntryClass(LocationEntries.class);
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);
 		syncConfig();

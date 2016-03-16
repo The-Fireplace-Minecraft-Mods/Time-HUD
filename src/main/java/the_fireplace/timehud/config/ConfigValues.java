@@ -15,4 +15,8 @@ public class ConfigValues {
 	public static final boolean REAL_DEFAULT = false;
 	public static boolean REAL;
 	public static final String REAL_NAME = "cfg.real";
+
+	public static final boolean NEEDCLOCK_DEFAULT = false;
+	public static boolean NEEDCLOCK;
+	public static final String NEEDCLOCK_NAME = "cfg.needclock";
 }
