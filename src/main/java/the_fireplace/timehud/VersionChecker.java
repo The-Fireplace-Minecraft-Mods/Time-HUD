@@ -3,12 +3,11 @@ package the_fireplace.timehud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -41,14 +40,14 @@ import java.util.Set;
  * Now uses Curse to find out the latest version. File name must be "HostMODNAME(nospaces)-w.x.y.z.jar" or it will probably crash.
  *  @author The_Fireplace
  */
-@Mod(modid=VersionChecker.MODID, name=VersionChecker.MODNAME, version=VersionChecker.VERSION, guiFactory = "the_fireplace."+VersionChecker.HostMODID+".VersionChecker")
-public class VersionChecker implements IModGuiFactory {
+@Mod(modid=VersionChecker.MODID, name=VersionChecker.MODNAME, version=VersionChecker.VERSION, guiFactory = "the_fireplace."+VersionChecker.HostMODID+".VersionChecker$VCGui")
+public class VersionChecker {
 	static final String HostMODID=TimeHud.MODID;
 	private static final String HostMODNAME=TimeHud.MODNAME;
 	private static String HostVERSION;
 	static final String MODID=HostMODID+"vc";
 	static final String MODNAME=HostMODNAME+" Version Checker";
-	static final String VERSION="1.4";
+	static final String VERSION="2.0";
 	private String curseCode, latest="0.0.0.0";
 
 	private static Configuration config;
@@ -90,10 +89,10 @@ public class VersionChecker implements IModGuiFactory {
 
 	private void tryNotifyClient(EntityPlayer player){
 		if(!Loader.isModLoaded("VersionChecker") && isHigherVersion() && canNotify()){
-			player.addChatMessage(new ChatComponentText("A new version of "+HostMODNAME+" is available!"));
-			player.addChatMessage(new ChatComponentText("=========="+latest+"=========="));
-			player.addChatMessage(new ChatComponentText("Get it at the following link:"));
-			player.addChatMessage(new ChatComponentText(getDownloadUrl()).setChatStyle(new ChatStyle().setItalic(true).setUnderlined(true).setColor(EnumChatFormatting.BLUE).setChatClickEvent(new ClickEvent(Action.OPEN_URL, getDownloadUrl()))));
+			player.addChatMessage(new TextComponentString("A new version of "+HostMODNAME+" is available!"));
+			player.addChatMessage(new TextComponentString("=========="+latest+"=========="));
+			player.addChatMessage(new TextComponentString("Get it at the following link:"));
+			player.addChatMessage(new TextComponentString(getDownloadUrl()).setChatStyle(new Style().setItalic(true).setUnderlined(true).setColor(TextFormatting.BLUE).setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, getDownloadUrl()))));
 			setChecked();
 		}
 	}
@@ -150,7 +149,7 @@ public class VersionChecker implements IModGuiFactory {
 					try{
 						Thread.sleep(100);
 					}catch(InterruptedException e){
-
+						e.printStackTrace();
 					}
 				tryNotifyClient(FMLClientHandler.instance().getClientPlayerEntity());
 			}
@@ -165,7 +164,7 @@ public class VersionChecker implements IModGuiFactory {
 	}
 
 	private String getDownloadUrl(){
-		return "http://www.curse.com/mc-mods/minecraft/"+curseCode;
+		return "http://mods.curse.com/mc-mods/minecraft/"+curseCode;
 	}
 
 	private boolean isHigherVersion(){
@@ -245,7 +244,9 @@ public class VersionChecker implements IModGuiFactory {
 				if(jarindex != -1)
 					return versionnumber;
 			}
-		}catch(IOException e){}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		return "0.0.0.0";
 	}
 
@@ -254,49 +255,57 @@ public class VersionChecker implements IModGuiFactory {
 		File file = new File(cachedir, curseCode+".json");
 		try{
 			Files.createDirectory(cachedir.toPath());
-		}catch(IOException e){}
+		}catch(IOException e){
+			System.out.println("Version checking directory detected.");
+		}
 		try{
 			URL url = new URL(String.format("https://widget.mcf.li/mc-mods/minecraft/%s.json", curseCode));
 			InputStream is = url.openStream();
 			if(file.exists())
 				file.delete();
-			file.createNewFile();
-			OutputStream os = new FileOutputStream(file);
+			if(file.createNewFile()) {
+				OutputStream os = new FileOutputStream(file);
 
-			byte[] b = new byte[2048];
-			int length;
+				byte[] b = new byte[2048];
+				int length;
 
-			while((length = is.read(b)) != -1)
-				os.write(b, 0, length);
+				while ((length = is.read(b)) != -1)
+					os.write(b, 0, length);
 
-			is.close();
-			os.close();
+				is.close();
+				os.close();
+			}
 		}catch(IOException e){
-			e.printStackTrace();
+			System.out.println("Error retrieving latest version information.");
 		}
 	}
-	@Override
-	public void initialize(Minecraft minecraftInstance) {}
+	@SideOnly(Side.CLIENT)
+	public static class VCGui implements IModGuiFactory {
+		@Override
+		public void initialize(Minecraft minecraftInstance) {
+		}
 
-	@Override
-	public Class<? extends GuiScreen> mainConfigGuiClass() {
-		return VCCG.class;
-	}
+		@Override
+		public Class<? extends GuiScreen> mainConfigGuiClass() {
+			return VCCG.class;
+		}
 
-	@Override
-	public Set<IModGuiFactory.RuntimeOptionCategoryElement> runtimeGuiCategories() {
-		return null;
-	}
+		@Override
+		public Set<IModGuiFactory.RuntimeOptionCategoryElement> runtimeGuiCategories() {
+			return null;
+		}
 
-	@Override
-	public IModGuiFactory.RuntimeOptionGuiHandler getHandlerFor(
-			IModGuiFactory.RuntimeOptionCategoryElement element) {
-		return null;
-	}
-	public static class VCCG extends GuiConfig {
-		public VCCG(GuiScreen parentScreen) {
-			super(parentScreen, new ConfigElement(config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), MODID, false,
-					false, GuiConfig.getAbridgedConfigPath(config.toString()));
+		@Override
+		public IModGuiFactory.RuntimeOptionGuiHandler getHandlerFor(
+				IModGuiFactory.RuntimeOptionCategoryElement element) {
+			return null;
+		}
+
+		public static class VCCG extends GuiConfig {
+			public VCCG(GuiScreen parentScreen) {
+				super(parentScreen, new ConfigElement(config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), MODID, false,
+						false, GuiConfig.getAbridgedConfigPath(config.toString()));
+			}
 		}
 	}
 }

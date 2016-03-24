@@ -4,13 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import the_fireplace.timehud.config.ConfigValues;
 
-import java.time.LocalDateTime;
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
 
 public class ForgeEvents {
 	@SubscribeEvent
@@ -39,28 +40,28 @@ public class ForgeEvents {
 			String d2 = ConfigValues.FORMAT;
 			if(ConfigValues.REAL){
 				if(d2.contains("MONTH"))
-					d2 = d2.replace("MONTH", String.valueOf(LocalDateTime.now().getMonthValue()));
+					d2 = d2.replace("MONTH", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
 				if(d2.contains("DATE"))
-					d2 = d2.replace("DATE", String.valueOf(LocalDateTime.now().getDayOfMonth()));
+					d2 = d2.replace("DATE", String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
 				if(d2.contains("YEAR"))
-					d2 = d2.replace("YEAR", String.valueOf(LocalDateTime.now().getYear()));
+					d2 = d2.replace("YEAR", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 				if(d2.contains("12HH")) {
-					int hour = LocalDateTime.now().getHour();
-					if(hour > 12)
-						hour -= 12;
+					int hour = Calendar.getInstance().get(Calendar.HOUR);
+					if(hour == 0)
+						hour = 12;
 					d2 = d2.replace("12HH", String.valueOf(hour));
 				}
 				if(d2.contains("24HH")) {
-					d2 = d2.replace("24HH", String.valueOf(LocalDateTime.now().getHour()));
+					d2 = d2.replace("24HH", String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)));
 				}
 				if(d2.contains("MM"))
-					d2 = d2.replace("MM", String.valueOf(LocalDateTime.now().getMinute()));
+					d2 = d2.replace("MM", String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)));
 				if(d2.contains("SS"))
-					d2 = d2.replace("SS", String.valueOf(LocalDateTime.now().getSecond()));
+					d2 = d2.replace("SS", String.valueOf(Calendar.getInstance().get(Calendar.SECOND)));
 				if(d2.contains("NAME"))
-					d2 = d2.replace("NAME", LocalDateTime.now().getMonth().name());
+					d2 = d2.replace("NAME", getMonthForInt(Calendar.getInstance().get(Calendar.MONTH)));
 				if(d2.contains("ZZ")) {
-					if(LocalDateTime.now().getHour() > 11)
+					if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > 11)
 						d2 = d2.replace("ZZ", "PM");
 					else
 						d2 = d2.replace("ZZ", "AM");
@@ -72,7 +73,7 @@ public class ForgeEvents {
 				long worldtime = mc.theWorld.getWorldTime();
 				long daycount = (long)Math.floor(worldtime/daylength);
 				long remainingticks = worldtime%daylength;
-				String[] names = new String[]{StatCollector.translateToLocal("january"), StatCollector.translateToLocal("february"), StatCollector.translateToLocal("march"), StatCollector.translateToLocal("april"), StatCollector.translateToLocal("may"), StatCollector.translateToLocal("june"), StatCollector.translateToLocal("july"), StatCollector.translateToLocal("august"), StatCollector.translateToLocal("september"), StatCollector.translateToLocal("october"), StatCollector.translateToLocal("november"), StatCollector.translateToLocal("december")};
+				String[] names = new String[]{I18n.translateToLocal("january"), I18n.translateToLocal("february"), I18n.translateToLocal("march"), I18n.translateToLocal("april"), I18n.translateToLocal("may"), I18n.translateToLocal("june"), I18n.translateToLocal("july"), I18n.translateToLocal("august"), I18n.translateToLocal("september"), I18n.translateToLocal("october"), I18n.translateToLocal("november"), I18n.translateToLocal("december")};
 				while(daycount > 365){
 					daycount -= 365;
 					year++;
@@ -195,5 +196,14 @@ public class ForgeEvents {
 				if(stack.getItem().equals(Items.clock))
 					return true;
 		return false;
+	}
+	String getMonthForInt(int num) {
+		String month = "wrong";
+		DateFormatSymbols dfs = new DateFormatSymbols();
+		String[] months = dfs.getMonths();
+		if (num >= 0 && num <= 11 ) {
+			month = months[num];
+		}
+		return month;
 	}
 }

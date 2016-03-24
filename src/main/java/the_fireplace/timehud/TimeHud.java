@@ -1,7 +1,7 @@
 package the_fireplace.timehud;
 
 import com.google.common.collect.Maps;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -49,10 +49,10 @@ public class TimeHud {
 			VERSION = event.getModMetadata().version;
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		LOCATION_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.LOCATION_NAME, ConfigValues.LOCATION_DEFAULT, StatCollector.translateToLocal(ConfigValues.LOCATION_NAME+".tooltip"));
-		FORMAT_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FORMAT_NAME, ConfigValues.FORMAT_DEFAULT, StatCollector.translateToLocal(ConfigValues.FORMAT_NAME+".tooltip"));
-		REAL_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.REAL_NAME, ConfigValues.REAL_DEFAULT, StatCollector.translateToLocal(ConfigValues.REAL_NAME+".tooltip"));
-		NEEDCLOCK_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.NEEDCLOCK_NAME, ConfigValues.NEEDCLOCK_DEFAULT, StatCollector.translateToLocal(ConfigValues.NEEDCLOCK_NAME+".tooltip"));
+		LOCATION_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.LOCATION_NAME, ConfigValues.LOCATION_DEFAULT, I18n.translateToLocal(ConfigValues.LOCATION_NAME+".tooltip"));
+		FORMAT_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FORMAT_NAME, ConfigValues.FORMAT_DEFAULT, I18n.translateToLocal(ConfigValues.FORMAT_NAME+".tooltip"));
+		REAL_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.REAL_NAME, ConfigValues.REAL_DEFAULT, I18n.translateToLocal(ConfigValues.REAL_NAME+".tooltip"));
+		NEEDCLOCK_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.NEEDCLOCK_NAME, ConfigValues.NEEDCLOCK_DEFAULT, I18n.translateToLocal(ConfigValues.NEEDCLOCK_NAME+".tooltip"));
 		LOCATION_PROPERTY.setConfigEntryClass(LocationEntries.class);
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);
 		syncConfig();
