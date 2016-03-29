@@ -3,7 +3,7 @@
   "modid": "timehud",
   "name": "Time HUD",
   "description": "Adds an HUD showing the time and date. Highly configurable.",
-  "version": "5.0.1.BUILDNUMBER",
+  "version": "5.0.2.BUILDNUMBER",
   "mcversion": "1.9",
   "url": "http://www.curse.com/mc-mods/minecraft/239110-time-hud",
   "updateUrl": "http://www.curse.com/mc-mods/minecraft/239110-time-hud",
@@ -12,7 +12,7 @@
   "logoFile": "logo.png",
   "screenshots": [],
   "dependencies": [],
-  "requiredMods": [],
+  "requiredMods": ["Forge@[12.16.0.1805,)"],
   "useDependencyInformation": true
 }
 ]

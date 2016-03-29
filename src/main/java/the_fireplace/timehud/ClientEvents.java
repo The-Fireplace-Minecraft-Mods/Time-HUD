@@ -13,7 +13,7 @@ import the_fireplace.timehud.config.ConfigValues;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
-public class ForgeEvents {
+public class ClientEvents {
 	@SubscribeEvent
 	public void guiRender(TickEvent.RenderTickEvent t){
 		Minecraft mc = Minecraft.getMinecraft();
@@ -67,7 +67,7 @@ public class ForgeEvents {
 						d2 = d2.replace("ZZ", "AM");
 				}
 			}else{
-				long month = 1, day = 1, year = 1;
+				long month = 1, day, year = 1;
 				long hour = 6, minute = 0, second = 0;
 				long daylength = 24000;
 				long worldtime = mc.theWorld.getWorldTime();
@@ -187,17 +187,17 @@ public class ForgeEvents {
 		}
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-		if(eventArgs.modID.equals(TimeHud.MODID))
+		if(eventArgs.getModID().equals(TimeHud.MODID))
 			TimeHud.syncConfig();
 	}
-	boolean hasClock(){
+	private boolean hasClock(){
 		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
 			if(stack != null)
 				if(stack.getItem().equals(Items.clock))
 					return true;
 		return false;
 	}
-	String getMonthForInt(int num) {
+	private String getMonthForInt(int num) {
 		String month = "wrong";
 		DateFormatSymbols dfs = new DateFormatSymbols();
 		String[] months = dfs.getMonths();

@@ -89,6 +89,6 @@ public class TimeHud {
 		locations.put("bottom-left", "Bottom Left");
 		locations.put("bottom-right", "Bottom Right");
 
-		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
+		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 	}
 }
