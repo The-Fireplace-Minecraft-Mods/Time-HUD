@@ -27,7 +27,7 @@ curseforge {
     id = '239110'
     changelog = file('changelog.txt')
     releaseType = 'release'
-	addGameVersion '1.9'
+	addGameVersion '1.9.4'
 	addGameVersion 'Java 8'
 	addGameVersion 'Java 7'
     mainArtifact jar 
@@ -39,9 +39,9 @@ group= "the_fireplace.timehud"
 archivesBaseName = "TimeHUD"
 
 minecraft {
-    version = "1.9-12.16.0.1811-1.9"
+    version = "1.9.4-12.17.0.1908-1.9.4"
     runDir = "run"
-    mappings = "snapshot_20160312"
+    mappings = "snapshot_20160522"
 }
 
 dependencies {
