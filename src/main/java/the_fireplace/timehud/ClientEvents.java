@@ -193,7 +193,7 @@ public class ClientEvents {
 	private boolean hasClock(){
 		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
 			if(stack != null)
-				if(stack.getItem().equals(Items.clock))
+				if(stack.getItem().equals(Items.CLOCK))
 					return true;
 		return false;
 	}
