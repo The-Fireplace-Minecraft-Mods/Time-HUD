@@ -2,9 +2,9 @@ package the_fireplace.timehud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -73,7 +73,7 @@ public class ClientEvents {
 				long worldtime = mc.theWorld.getWorldTime();
 				long daycount = (long)Math.floor(worldtime/daylength);
 				long remainingticks = worldtime%daylength;
-				String[] names = new String[]{I18n.translateToLocal("january"), I18n.translateToLocal("february"), I18n.translateToLocal("march"), I18n.translateToLocal("april"), I18n.translateToLocal("may"), I18n.translateToLocal("june"), I18n.translateToLocal("july"), I18n.translateToLocal("august"), I18n.translateToLocal("september"), I18n.translateToLocal("october"), I18n.translateToLocal("november"), I18n.translateToLocal("december")};
+				String[] names = new String[]{I18n.format("january"), I18n.format("february"), I18n.format("march"), I18n.format("april"), I18n.format("may"), I18n.format("june"), I18n.format("july"), I18n.format("august"), I18n.format("september"), I18n.format("october"), I18n.format("november"), I18n.format("december")};
 				while(daycount > 365){
 					daycount -= 365;
 					year++;
@@ -193,7 +193,7 @@ public class ClientEvents {
 	private boolean hasClock(){
 		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
 			if(stack != null)
-				if(stack.getItem().equals(Items.clock))
+				if(stack.getItem().equals(Items.CLOCK))
 					return true;
 		return false;
 	}
