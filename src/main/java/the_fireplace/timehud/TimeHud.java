@@ -14,12 +14,10 @@ import the_fireplace.timehud.config.LocationEntries;
 
 import java.util.Map;
 
-@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true)
+@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "http://caterpillar.bitnamiapp.com/jsons/timehud.json", acceptedMinecraftVersions = "[1.9.4,1.10.2]")
 public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";
-	public static String VERSION;
-	public static final String curseCode = "239110-time-hud";
 
 	public static Map<Object, String> formats = Maps.newHashMap();
 	public static Map<Object, String> locations = Maps.newHashMap();
@@ -42,11 +40,6 @@ public class TimeHud {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		String[] version = event.getModMetadata().version.split("\\.");
-		if(version[3].equals("BUILDNUMBER"))//Dev environment
-			VERSION = event.getModMetadata().version.replace("BUILDNUMBER", "9001");
-		else//Released build
-			VERSION = event.getModMetadata().version;
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		LOCATION_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.LOCATION_NAME, ConfigValues.LOCATION_DEFAULT, I18n.format(ConfigValues.LOCATION_NAME+".tooltip"));
