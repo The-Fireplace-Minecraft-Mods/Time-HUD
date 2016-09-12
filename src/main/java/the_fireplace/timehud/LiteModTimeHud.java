@@ -1,30 +1,66 @@
 package the_fireplace.timehud;
 
+import com.google.common.collect.Maps;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.mumfrey.liteloader.Configurable;
+import com.mumfrey.liteloader.HUDRenderListener;
+import com.mumfrey.liteloader.modconfig.ConfigPanel;
+import com.mumfrey.liteloader.modconfig.ConfigStrategy;
+import com.mumfrey.liteloader.modconfig.ExposableOptions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import the_fireplace.timehud.config.ConfigValues;
 
+import java.io.File;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.Map;
 
-public class ClientEvents {
-	@SubscribeEvent
-	public void guiRender(TickEvent.RenderTickEvent t){
+@ExposableOptions(strategy = ConfigStrategy.Unversioned, filename="timehud.json")
+public class LiteModTimeHud implements Configurable, HUDRenderListener {
+	public static LiteModTimeHud instance;
+	@Expose
+	@SerializedName("location")
+	public String location = "top-left";
+	@Expose
+	@SerializedName("format")
+	public String format = "24HH:MMBRNAME DATE, YEAR";
+	@Expose
+	@SerializedName("real_time")
+	public boolean real_time = false;
+	@Expose
+	@SerializedName("need_clock")
+	public boolean needclock = false;
+
+	public LiteModTimeHud(){
+		instance = this;
+	}
+
+	public static final String MODNAME="Time HUD";
+
+	public static Map<Object, String> formats = Maps.newHashMap();
+	public static Map<Object, String> locations = Maps.newHashMap();
+
+	@Override
+	public Class<? extends ConfigPanel> getConfigPanelClass() {
+		return null;
+	}
+
+	@Override
+	public void onPreRenderHUD(int screenWidth, int screenHeight) {
+
+	}
+
+	@Override
+	public void onPostRenderHUD(int width, int height) {
 		Minecraft mc = Minecraft.getMinecraft();
 		if(mc.inGameHasFocus){
-			if(ConfigValues.NEEDCLOCK && !hasClock())
+			if(needclock && !hasClock())
 				return;
-			ScaledResolution res = new ScaledResolution(mc);
-			int width = res.getScaledWidth();
-			int height = res.getScaledHeight();
 			int x=0, y=0;
-			String[] loc = ConfigValues.LOCATION.split("-");
+			String[] loc = location.split("-");
 			if(loc[0].equals("top"))
 				y=4;
 			if(loc[0].equals("center"))
@@ -37,8 +73,8 @@ public class ClientEvents {
 				x=width/2-25;
 			if(loc[1].equals("right"))
 				x=width-4-50;
-			String d2 = ConfigValues.FORMAT;
-			if(ConfigValues.REAL){
+			String d2 = format;
+			if(real_time){
 				if(d2.contains("MONTH"))
 					d2 = d2.replace("MONTH", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
 				if(d2.contains("DATE"))
@@ -183,15 +219,62 @@ public class ClientEvents {
 			mc.ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, d3[0], x, y, -1);
 			if(d3.length > 1)
 				mc.ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, d3[1], x, y+12, -1);
-			}
 		}
-	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-		if(eventArgs.getModID().equals(TimeHud.MODID))
-			TimeHud.syncConfig();
 	}
+
+	@Override
+	public String getVersion() {
+		return null;
+	}
+
+	@Override
+	public void init(File configPath) {
+		//Example: 10:45:35 PM December 17, 2015
+		formats.put("24HH:MM:SSBRNAME DATE, YEAR","22:45:35-RETURN-December 17, 2015");
+		formats.put("12HH:MM:SS ZZBRNAME DATE, YEAR","10:45:35 PM-RETURN-December 17, 2015");
+		formats.put("24HH:MM:SSBRMONTH/DATE/YEAR","22:45:35-RETURN-12/17/2015");
+		formats.put("12HH:MM:SS ZZBRMONTH/DATE/YEAR","10:45:35 PM-RETURN-12/17/2015");
+		formats.put("24HH:MM:SSBRDATE/MONTH/YEAR","22:45:35-RETURN-17/12/2015");
+		formats.put("12HH:MM:SS ZZBRDATE/MONTH/YEAR","10:45:35 PM-RETURN-17/12/2015");
+		//No seconds
+		formats.put("24HH:MMBRNAME DATE, YEAR","22:45-RETURN-December 17, 2015");
+		formats.put("12HH:MM ZZBRNAME DATE, YEAR","10:45 PM-RETURN-December 17, 2015");
+		formats.put("24HH:MMBRMONTH/DATE/YEAR","22:45-RETURN-12/17/2015");
+		formats.put("12HH:MM ZZBRMONTH/DATE/YEAR","10:45 PM-RETURN-12/17/2015");
+		formats.put("24HH:MMBRDATE/MONTH/YEAR","22:45-RETURN-17/12/2015");
+		formats.put("12HH:MM ZZBRDATE/MONTH/YEAR","10:45 PM-RETURN-17/12/2015");
+		//No time
+		formats.put("NAME DATE, YEAR","December 17, 2015");
+		formats.put("MONTH/DATE/YEAR","12/17/2015");
+		formats.put("DATE/MONTH/YEAR","17/12/2015");
+		//No date, no seconds
+		formats.put("24HH:MM","22:45");
+		formats.put("12HH:MM ZZ","10:45 PM");
+		//No date, with seconds
+		formats.put("24HH:MM:SS","22:45:35");
+		formats.put("12HH:MM:SS ZZ","10:45:35 PM");
+
+		locations.put("top-left", "Top Left");
+		locations.put("top-center", "Top Center");
+		locations.put("top-right", "Top Right");
+		locations.put("center-left", "Center Left");
+		locations.put("center-right", "Center Right");
+		locations.put("bottom-left", "Bottom Left");
+		locations.put("bottom-right", "Bottom Right");
+	}
+
+	@Override
+	public void upgradeSettings(String version, File configPath, File oldConfigPath) {
+
+	}
+
+	@Override
+	public String getName() {
+		return MODNAME;
+	}
+
 	private boolean hasClock(){
-		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
+		for(ItemStack stack: Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
 			if(stack != null)
 				if(stack.getItem().equals(Items.CLOCK))
 					return true;

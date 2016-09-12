@@ -1,0 +1,11 @@
+{
+  "name": "Time HUD",
+  "version": "1.0.1.BUILDNUMBER",
+  "mcversion": "",
+  "author": "The_Fireplace",
+  "description": "Adds an HUD showing the time and date. Highly configurable.",
+  "url": "http://mods.curse.com/mc-mods/minecraft/239110-time-hud",
+  "mixinConfigs": [
+    //"mixins.ias.json"
+  ]
+}
