@@ -112,7 +112,7 @@ curseforge {
 }
 
 modsIO {
-    key = project.modsioApiKey
+    key = project.hasProperty("modsioApiKey")? project.modsioApiKey : "empty"
     project{
 		artifact = new File(jar.destinationDir, archivesBaseName+"-"+version+".jar")
 		modid = "1228"
