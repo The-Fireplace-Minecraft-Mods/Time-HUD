@@ -1,1 +1,2 @@
 Time HUD is now hidden if the Debug screen is showing.
+Fixed text alignment issues
