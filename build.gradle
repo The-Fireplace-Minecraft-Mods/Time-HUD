@@ -29,9 +29,9 @@ allprojects {
     targetCompatibility = 1.8
 }
 
-version = "7.0.0"
+version = "7.1.0"
 group= "the_fireplace.timehud"
-archivesBaseName = "TimeHUD-Forge"
+archivesBaseName = "TimeHUD-Forge-1.11"
 
 minecraft {
     version = "1.11-13.19.0.2153"
