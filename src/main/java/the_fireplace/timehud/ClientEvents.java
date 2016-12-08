@@ -17,7 +17,7 @@ public class ClientEvents {
 	@SubscribeEvent
 	public void guiRender(TickEvent.RenderTickEvent t){
 		Minecraft mc = Minecraft.getMinecraft();
-		if(mc.inGameHasFocus){
+		if(mc.inGameHasFocus && !mc.gameSettings.showDebugInfo){
 			if(ConfigValues.NEEDCLOCK && !hasClock())
 				return;
 			ScaledResolution res = new ScaledResolution(mc);
