@@ -23,20 +23,6 @@ public class ClientEvents {
 			ScaledResolution res = new ScaledResolution(mc);
 			int width = res.getScaledWidth();
 			int height = res.getScaledHeight();
-			int x = 0, y = 0;
-			String[] loc = ConfigValues.LOCATION.split("-");
-			if (loc[0].equals("top"))
-				y = 4;
-			if (loc[0].equals("center"))
-				y = height / 2 - 6;
-			if (loc[0].equals("bottom"))
-				y = height - 4 - 12;
-			if (loc[1].equals("left"))
-				x = 4;
-			if (loc[1].equals("center"))
-				x = width / 2/* - 25*/;
-			if (loc[1].equals("right"))
-				x = width - 4/* - 50*/;
 			String d2 = ConfigValues.FORMAT;
 			if (ConfigValues.REAL) {
 				if (d2.contains("MONTH"))
@@ -190,22 +176,39 @@ public class ClientEvents {
 				}
 			}
 			String[] d3 = d2.split("BR");
+			boolean twoline = false;
+			if (d3.length > 1)
+				twoline=true;
+			int x = 0, y = 0;
+			String[] loc = ConfigValues.LOCATION.split("-");
+			if (loc[0].equals("top"))
+				y = 4;
+			if (loc[0].equals("center"))
+				y = height / 2 - (twoline ? mc.fontRendererObj.FONT_HEIGHT+mc.fontRendererObj.FONT_HEIGHT/6 : mc.fontRendererObj.FONT_HEIGHT/2);
+			if (loc[0].equals("bottom"))
+				y = height - 4 - (twoline ? mc.fontRendererObj.FONT_HEIGHT*2+mc.fontRendererObj.FONT_HEIGHT/3 : mc.fontRendererObj.FONT_HEIGHT);
+			if (loc[1].equals("left"))
+				x = 4;
+			if (loc[1].equals("center"))
+				x = width / 2;
+			if (loc[1].equals("right"))
+				x = width - 4;
 			switch(loc[1]){
 				case "left":
 				default:
 					mc.ingameGUI.drawString(mc.fontRendererObj, d3[0], x, y, -1);
-					if (d3.length > 1)
-						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x, y + 12, -1);
+					if(twoline)
+						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x, y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
 					break;
 				case "center":
 					mc.ingameGUI.drawCenteredString(mc.fontRendererObj, d3[0], x, y, -1);
-					if (d3.length > 1)
-						mc.ingameGUI.drawCenteredString(mc.fontRendererObj, d3[1], x, y + 12, -1);
+					if (twoline)
+						mc.ingameGUI.drawCenteredString(mc.fontRendererObj, d3[1], x, y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
 					break;
 				case "right":
 					mc.ingameGUI.drawString(mc.fontRendererObj, d3[0], x-mc.fontRendererObj.getStringWidth(d3[0]), y, -1);
-					if (d3.length > 1)
-						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x-mc.fontRendererObj.getStringWidth(d3[1]), y + 12, -1);
+					if (twoline)
+						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x-mc.fontRendererObj.getStringWidth(d3[1]), y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
 					break;
 			}
 		}
