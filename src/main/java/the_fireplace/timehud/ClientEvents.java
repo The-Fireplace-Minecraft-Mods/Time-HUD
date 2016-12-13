@@ -81,7 +81,7 @@ public class ClientEvents {
 				long hour = 6, minute = 0, second = 0;
 				long daylength = 24000;
 				long worldtime = mc.world.getWorldTime();
-				long daycount = (long) Math.floor(worldtime / daylength);
+				long daycount = (long) Math.floor((worldtime+daylength/4) / daylength);
 				long remainingticks = worldtime % daylength;
 				String[] names = new String[]{I18n.format("january"), I18n.format("february"), I18n.format("march"), I18n.format("april"), I18n.format("may"), I18n.format("june"), I18n.format("july"), I18n.format("august"), I18n.format("september"), I18n.format("october"), I18n.format("november"), I18n.format("december")};
 				while (daycount > 365) {
