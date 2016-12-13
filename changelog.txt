@@ -1,2 +1,3 @@
 Time HUD is now hidden if the Debug screen is showing.
 Fixed text alignment issues
+Fixed Real Time not adding a 0 before single digit minutes and seconds

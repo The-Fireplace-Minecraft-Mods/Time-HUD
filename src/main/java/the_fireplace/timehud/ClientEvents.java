@@ -54,10 +54,20 @@ public class ClientEvents {
 				if (d2.contains("24HH")) {
 					d2 = d2.replace("24HH", String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)));
 				}
-				if (d2.contains("MM"))
-					d2 = d2.replace("MM", String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)));
-				if (d2.contains("SS"))
-					d2 = d2.replace("SS", String.valueOf(Calendar.getInstance().get(Calendar.SECOND)));
+				if (d2.contains("MM")) {
+					String minute = String.valueOf(Calendar.getInstance().get(Calendar.MINUTE));
+					if(minute.length() == 1)
+						d2 = d2.replace("MM", '0'+minute);
+					else
+						d2 = d2.replace("MM", minute);
+				}
+				if (d2.contains("SS")) {
+					String second = String.valueOf(Calendar.getInstance().get(Calendar.SECOND));
+					if(second.length() == 1)
+						d2 = d2.replace("SS", '0'+second);
+					else
+						d2 = d2.replace("SS", second);
+				}
 				if (d2.contains("NAME"))
 					d2 = d2.replace("NAME", getMonthForInt(Calendar.getInstance().get(Calendar.MONTH)));
 				if (d2.contains("ZZ")) {
