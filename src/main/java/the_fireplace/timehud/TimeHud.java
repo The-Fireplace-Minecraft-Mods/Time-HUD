@@ -73,6 +73,20 @@ public class TimeHud {
 		//No date, with seconds
 		formats.put("24HH:MM:SS","22:45:35");
 		formats.put("12HH:MM:SS ZZ","10:45:35 PM");
+		//One-line
+		formats.put("24HH:MM:SS, NAME DATE, YEAR","22:45:35, December 17, 2015");
+		formats.put("12HH:MM:SS ZZ, NAME DATE, YEAR","10:45:35 PM, December 17, 2015");
+		formats.put("24HH:MM:SS, MONTH/DATE/YEAR","22:45:35, 12/17/2015");
+		formats.put("12HH:MM:SS ZZ, MONTH/DATE/YEAR","10:45:35 PM, 12/17/2015");
+		formats.put("24HH:MM:SS, DATE/MONTH/YEAR","22:45:35, 17/12/2015");
+		formats.put("12HH:MM:SS ZZ, DATE/MONTH/YEAR","10:45:35 PM, 17/12/2015");
+		//One-line, no seconds
+		formats.put("24HH:MM, NAME DATE, YEAR","22:45, December 17, 2015");
+		formats.put("12HH:MM ZZ, NAME DATE, YEAR","10:45 PM, December 17, 2015");
+		formats.put("24HH:MM, MONTH/DATE/YEAR","22:45, 12/17/2015");
+		formats.put("12HH:MM ZZ, MONTH/DATE/YEAR","10:45 PM, 12/17/2015");
+		formats.put("24HH:MM, DATE/MONTH/YEAR","22:45, 17/12/2015");
+		formats.put("12HH:MM ZZ, DATE/MONTH/YEAR","10:45 PM, 17/12/2015");
 
 		locations.put("top-left", "Top Left");
 		locations.put("top-center", "Top Center");
