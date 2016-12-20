@@ -14,7 +14,7 @@ import the_fireplace.timehud.config.LocationEntries;
 
 import java.util.Map;
 
-@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/timehud.json", acceptedMinecraftVersions = "[1.9.4,1.10.2]")
+@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/timehud.json", acceptedMinecraftVersions = "[1.8.8,1.9]")
 public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";

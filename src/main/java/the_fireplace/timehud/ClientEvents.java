@@ -215,13 +215,13 @@ public class ClientEvents {
 	}
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-		if(eventArgs.getModID().equals(TimeHud.MODID))
+		if(eventArgs.modID.equals(TimeHud.MODID))
 			TimeHud.syncConfig();
 	}
 	private boolean hasClock(){
 		for(ItemStack stack:Minecraft.getMinecraft().thePlayer.inventory.mainInventory)
 			if(stack != null)
-				if(stack.getItem().equals(Items.CLOCK))
+				if(stack.getItem().equals(Items.clock))
 					return true;
 		return false;
 	}
