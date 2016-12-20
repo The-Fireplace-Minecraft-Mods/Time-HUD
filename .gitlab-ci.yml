@@ -2,8 +2,8 @@ variables:
   CACHE_DIR: "$CI_PROJECT_DIR/build"
   CACHE_DIR2: "$CI_PROJECT_DIR/.gradle"
   
-  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/TimeHUD-Forge-*.jar"
-  ARTIFACTS: "$CI_PROJECT_DIR/TimeHUD-Forge-*.jar"
+  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/TimeHUD-Forge-1.10.2-*.jar"
+  ARTIFACTS: "$CI_PROJECT_DIR/TimeHUD-Forge-1.10.2-*.jar"
 
 cache:
  paths:
@@ -23,6 +23,6 @@ deploy:
   - cp $ORIG_ARTIFACTS .
   when: manual
   artifacts:
-    name: "TimeHUD-Forge-$(cat $CACHE_DIR/.version)"
+    name: "TimeHUD-Forge-1.10.2-$(cat $CACHE_DIR/.version)"
     paths:
     - $ARTIFACTS

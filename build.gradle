@@ -31,13 +31,13 @@ allprojects {
 
 version = "7.1.0"
 group= "the_fireplace.timehud"
-archivesBaseName = "TimeHUD-Forge-1.11"
+archivesBaseName = "TimeHUD-Forge-1.10.2"
 
 minecraft {
-    version = "1.11-13.19.0.2153"
+    version = "1.10.2-12.18.3.2185"
     runDir = "run"
     replace '${version}', project.version
-    mappings = "snapshot_20161119"
+    mappings = "stable_29"
 }
 
 dependencies {
@@ -95,7 +95,7 @@ curseforge {
     id = '239110'
     changelog = file('changelog.txt')
     releaseType = 'release'
-    addGameVersion '1.11'
+    addGameVersion '1.10.2'
 	addGameVersion 'Java 8'
     mainArtifact(jar) {
         displayName = jar.archiveName.replace(".jar", "")
@@ -116,10 +116,10 @@ modsIO {
     project{
 		artifact = new File(jar.destinationDir, archivesBaseName+"-"+version+".jar")
 		modid = "1228"
-		minecraft = "1.11"
+		minecraft = "1.10.2"
 		try{changelog = file('changelog.txt').text}catch(Exception e){changelog=""}
 		tag = ""
-		current = true
+		current = false
     }
 }
 
