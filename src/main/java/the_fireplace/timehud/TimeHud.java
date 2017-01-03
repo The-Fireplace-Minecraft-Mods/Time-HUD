@@ -1,20 +1,20 @@
 package the_fireplace.timehud;
 
 import com.google.common.collect.Maps;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.timehud.config.ConfigValues;
 import the_fireplace.timehud.config.FormatEntries;
 import the_fireplace.timehud.config.LocationEntries;
 
 import java.util.Map;
 
-@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/timehud.json", acceptedMinecraftVersions = "[1.8.8,1.9]")
+@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", canBeDeactivated = true)
 public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";
@@ -96,6 +96,6 @@ public class TimeHud {
 		locations.put("bottom-left", "Bottom Left");
 		locations.put("bottom-right", "Bottom Right");
 
-		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		FMLCommonHandler.instance().bus().register(new ClientEvents());
 	}
 }

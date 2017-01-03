@@ -4,7 +4,7 @@
   "name": "Time HUD",
   "description": "Adds an HUD showing the time and date. Highly configurable.",
   "version": "${version}",
-  "mcversion": "1.8.9",
+  "mcversion": "1.7.10",
   "url": "http://www.curse.com/mc-mods/minecraft/239110-time-hud",
   "updateUrl": "http://www.curse.com/mc-mods/minecraft/239110-time-hud",
   "authorList": ["The_Fireplace"],

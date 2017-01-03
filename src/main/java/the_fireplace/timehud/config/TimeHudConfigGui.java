@@ -3,7 +3,7 @@ package the_fireplace.timehud.config;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.GuiConfig;
 import the_fireplace.timehud.TimeHud;
 
 public class TimeHudConfigGui extends GuiConfig {

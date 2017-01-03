@@ -5,9 +5,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import the_fireplace.timehud.config.ConfigValues;
 
 import java.text.DateFormatSymbols;
@@ -20,7 +20,7 @@ public class ClientEvents {
 		if(mc.inGameHasFocus && !mc.gameSettings.showDebugInfo) {
 			if (ConfigValues.NEEDCLOCK && !hasClock())
 				return;
-			ScaledResolution res = new ScaledResolution(mc);
+			ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			int width = res.getScaledWidth();
 			int height = res.getScaledHeight();
 			String d2 = ConfigValues.FORMAT;
