@@ -14,9 +14,22 @@ cache:
 
 stages:
 - deploy
+- deployMaven
     
 deploy:
   stage: deploy
+  script:
+  - ./gradlew clean
+  - ./gradlew build curseforge uploadToModsIO -PcurseForgeApiKey=$curseForgeApiKey -PmodsioApiKey=$modsioApiKey
+  - cp $ORIG_ARTIFACTS .
+  when: manual
+  artifacts:
+    name: "TimeHUD-Forge-1.11.2-$(cat $CACHE_DIR/.version)"
+    paths:
+    - $ARTIFACTS
+    
+deployMaven:
+  stage: deployMaven
   script:
   - ./gradlew clean
   - ./gradlew build uploadArchives curseforge uploadToModsIO -PcurseForgeApiKey=$curseForgeApiKey -PmodsioApiKey=$modsioApiKey

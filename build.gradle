@@ -34,10 +34,10 @@ group= "the_fireplace.timehud"
 archivesBaseName = "TimeHUD-Forge-1.11.2"
 
 minecraft {
-    version = "1.11.2-13.20.0.2201"
+    version = "1.11.2-13.20.0.2251"
     runDir = "run"
     replace '${version}', project.version
-    mappings = "snapshot_20161229"
+    mappings = "snapshot_20170224"
 }
 
 dependencies {
@@ -58,6 +58,10 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+runClient {
+    args '--username', 'The_Fireplace'
 }
 
 task showVersion {

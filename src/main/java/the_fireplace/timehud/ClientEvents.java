@@ -184,9 +184,9 @@ public class ClientEvents {
 			if (loc[0].equals("top"))
 				y = 4;
 			if (loc[0].equals("center"))
-				y = height / 2 - (twoline ? mc.fontRendererObj.FONT_HEIGHT+mc.fontRendererObj.FONT_HEIGHT/6 : mc.fontRendererObj.FONT_HEIGHT/2);
+				y = height / 2 - (twoline ? mc.fontRenderer.FONT_HEIGHT+mc.fontRenderer.FONT_HEIGHT/6 : mc.fontRenderer.FONT_HEIGHT/2);
 			if (loc[0].equals("bottom"))
-				y = height - 4 - (twoline ? mc.fontRendererObj.FONT_HEIGHT*2+mc.fontRendererObj.FONT_HEIGHT/3 : mc.fontRendererObj.FONT_HEIGHT);
+				y = height - 4 - (twoline ? mc.fontRenderer.FONT_HEIGHT*2+mc.fontRenderer.FONT_HEIGHT/3 : mc.fontRenderer.FONT_HEIGHT);
 			if (loc[1].equals("left"))
 				x = 4;
 			if (loc[1].equals("center"))
@@ -196,19 +196,19 @@ public class ClientEvents {
 			switch(loc[1]){
 				case "left":
 				default:
-					mc.ingameGUI.drawString(mc.fontRendererObj, d3[0], x, y, -1);
+					mc.ingameGUI.drawString(mc.fontRenderer, d3[0], x, y, -1);
 					if(twoline)
-						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x, y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
+						mc.ingameGUI.drawString(mc.fontRenderer, d3[1], x, y + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, -1);
 					break;
 				case "center":
-					mc.ingameGUI.drawCenteredString(mc.fontRendererObj, d3[0], x, y, -1);
+					mc.ingameGUI.drawCenteredString(mc.fontRenderer, d3[0], x, y, -1);
 					if (twoline)
-						mc.ingameGUI.drawCenteredString(mc.fontRendererObj, d3[1], x, y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
+						mc.ingameGUI.drawCenteredString(mc.fontRenderer, d3[1], x, y + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, -1);
 					break;
 				case "right":
-					mc.ingameGUI.drawString(mc.fontRendererObj, d3[0], x-mc.fontRendererObj.getStringWidth(d3[0]), y, -1);
+					mc.ingameGUI.drawString(mc.fontRenderer, d3[0], x-mc.fontRenderer.getStringWidth(d3[0]), y, -1);
 					if (twoline)
-						mc.ingameGUI.drawString(mc.fontRendererObj, d3[1], x-mc.fontRendererObj.getStringWidth(d3[1]), y + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT/3, -1);
+						mc.ingameGUI.drawString(mc.fontRenderer, d3[1], x-mc.fontRenderer.getStringWidth(d3[1]), y + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, -1);
 					break;
 			}
 		}
