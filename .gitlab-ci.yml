@@ -16,7 +16,6 @@ cache:
 
 stages:
 - deploy
-- deployMaven
     
 deploy:
   stage: deploy
@@ -31,7 +30,7 @@ deploy:
     - $ARTIFACTS
     
 deployMaven:
-  stage: deployMaven
+  stage: deploy
   script:
   - ./gradlew clean
   - ./gradlew build uploadArchives curseforge uploadToModsIO -PcurseForgeApiKey=$curseForgeApiKey -PmodsioApiKey=$modsioApiKey
