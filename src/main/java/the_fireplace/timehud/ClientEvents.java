@@ -26,7 +26,7 @@ public class ClientEvents {
 			String d2 = ConfigValues.FORMAT;
 			if (ConfigValues.REAL) {
 				if (d2.contains("MONTH"))
-					d2 = d2.replace("MONTH", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
+					d2 = d2.replace("MONTH", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1));
 				if (d2.contains("DATE"))
 					d2 = d2.replace("DATE", String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
 				if (d2.contains("YEAR"))
