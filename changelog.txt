@@ -1,1 +1,1 @@
-Fixed the numerical month showing 1 lower in Real Time mode
+You can now drag and drop the Time HUD where you want it. Anywhere on the screen!

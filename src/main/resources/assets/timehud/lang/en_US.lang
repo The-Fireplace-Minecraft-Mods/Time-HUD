@@ -1,11 +1,20 @@
-cfg.location=Location
-cfg.location.tooltip=The location on the screen the HUD will appear
 cfg.format=Format
 cfg.format.tooltip=The time and date format.
 cfg.real=Real time/date
 cfg.real.tooltip=Enabling makes the HUD show the real time and date instead of the Minecraft time and date.
 cfg.needclock=Requires Clock
 cfg.needclock.tooltip=Enabling makes the HUD require a clock to be in your inventory.
+cfg.clockx=Clock X
+cfg.clockx.tooltip=The X coordinate of the clock on the screen, with respect to the alignment
+cfg.clocky=Clock Y
+cfg.clocky.tooltip=The Y coordinate of the clock on the screen, with respect to the alignment
+cfg.xalignment=X Alignment
+cfg.xalignment.tooltip=The justification used to align the clock's X value, useful when resizing the screen
+cfg.yalignment=Y Alignment
+cfg.yalignment.tooltip=The justification used to align the clock's Y value, useful when resizing the screen
+key.moveclock.desc=Open the Time HUD movement screen
+key.timehud.category=Time HUD
+
 january=January
 february=February
 march=March

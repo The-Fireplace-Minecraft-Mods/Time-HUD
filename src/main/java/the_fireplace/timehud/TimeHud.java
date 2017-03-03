@@ -10,7 +10,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.timehud.config.ConfigValues;
 import the_fireplace.timehud.config.FormatEntries;
-import the_fireplace.timehud.config.LocationEntries;
+import the_fireplace.timehud.config.XJust;
+import the_fireplace.timehud.config.YJust;
 
 import java.util.Map;
 
@@ -19,20 +20,29 @@ public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";
 
+	@Mod.Instance(MODID)
+	public static TimeHud instance;
+
 	public static Map<Object, String> formats = Maps.newHashMap();
-	public static Map<Object, String> locations = Maps.newHashMap();
+	public KeyHandler keyHandler;
 
 	public static Configuration config;
-	public static Property LOCATION_PROPERTY;
 	public static Property FORMAT_PROPERTY;
 	public static Property REAL_PROPERTY;
 	public static Property NEEDCLOCK_PROPERTY;
+	public static Property CLOCKX_PROPERTY;
+	public static Property CLOCKY_PROPERTY;
+	public static Property XALIGNMENT_PROPERTY;
+	public static Property YALIGNMENT_PROPERTY;
 
 	public static void syncConfig(){
-		ConfigValues.LOCATION = LOCATION_PROPERTY.getString();
 		ConfigValues.FORMAT = FORMAT_PROPERTY.getString();
 		ConfigValues.REAL = REAL_PROPERTY.getBoolean();
 		ConfigValues.NEEDCLOCK = NEEDCLOCK_PROPERTY.getBoolean();
+		ConfigValues.CLOCKX = CLOCKX_PROPERTY.getInt();
+		ConfigValues.CLOCKY = CLOCKY_PROPERTY.getInt();
+		ConfigValues.XALIGNMENT = XJust.valueOf(XALIGNMENT_PROPERTY.getString());
+		ConfigValues.YALIGNMENT = YJust.valueOf(YALIGNMENT_PROPERTY.getString());
 
 		if(config.hasChanged())
 			config.save();
@@ -42,11 +52,13 @@ public class TimeHud {
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		LOCATION_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.LOCATION_NAME, ConfigValues.LOCATION_DEFAULT, I18n.format(ConfigValues.LOCATION_NAME+".tooltip"));
 		FORMAT_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FORMAT_NAME, ConfigValues.FORMAT_DEFAULT, I18n.format(ConfigValues.FORMAT_NAME+".tooltip"));
 		REAL_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.REAL_NAME, ConfigValues.REAL_DEFAULT, I18n.format(ConfigValues.REAL_NAME+".tooltip"));
 		NEEDCLOCK_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.NEEDCLOCK_NAME, ConfigValues.NEEDCLOCK_DEFAULT, I18n.format(ConfigValues.NEEDCLOCK_NAME+".tooltip"));
-		LOCATION_PROPERTY.setConfigEntryClass(LocationEntries.class);
+		CLOCKX_PROPERTY = config.get("hidden", ConfigValues.CLOCKX_NAME, ConfigValues.CLOCKX_DEFAULT, I18n.format(ConfigValues.CLOCKX_NAME+".tooltip"));
+		CLOCKY_PROPERTY = config.get("hidden", ConfigValues.CLOCKY_NAME, ConfigValues.CLOCKY_DEFAULT, I18n.format(ConfigValues.CLOCKY_NAME+".tooltip"));
+		XALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.XALIGNMENT_NAME, ConfigValues.XALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.XALIGNMENT_NAME+".tooltip"));
+		YALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.YALIGNMENT_NAME, ConfigValues.YALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.YALIGNMENT_NAME+".tooltip"));
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);
 		syncConfig();
 		//Example: 10:45:35 PM December 17, 2015
@@ -88,14 +100,7 @@ public class TimeHud {
 		formats.put("24HH:MM, DATE/MONTH/YEAR","22:45, 17/12/2015");
 		formats.put("12HH:MM ZZ, DATE/MONTH/YEAR","10:45 PM, 17/12/2015");
 
-		locations.put("top-left", "Top Left");
-		locations.put("top-center", "Top Center");
-		locations.put("top-right", "Top Right");
-		locations.put("center-left", "Center Left");
-		locations.put("center-right", "Center Right");
-		locations.put("bottom-left", "Bottom Left");
-		locations.put("bottom-right", "Bottom Right");
-
 		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		MinecraftForge.EVENT_BUS.register(keyHandler = new KeyHandler());
 	}
 }

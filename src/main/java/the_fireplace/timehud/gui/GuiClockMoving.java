@@ -1,30 +1,46 @@
-package the_fireplace.timehud;
+package the_fireplace.timehud.gui;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL12;
+import the_fireplace.timehud.ClientEvents;
+import the_fireplace.timehud.KeyHandler;
+import the_fireplace.timehud.TimeHud;
 import the_fireplace.timehud.config.ConfigValues;
-import the_fireplace.timehud.gui.GuiClockMoving;
+import the_fireplace.timehud.config.XJust;
+import the_fireplace.timehud.config.YJust;
 
 import java.awt.*;
-import java.text.DateFormatSymbols;
+import java.io.IOException;
 import java.util.Calendar;
 
-public class ClientEvents {
-	@SubscribeEvent
-	public void guiRender(TickEvent.RenderTickEvent t){
-		Minecraft mc = Minecraft.getMinecraft();
-		if((mc.inGameHasFocus && !mc.gameSettings.showDebugInfo) || mc.currentScreen instanceof GuiClockMoving) {
-			if (ConfigValues.NEEDCLOCK && !hasClock())
-				return;
-			ScaledResolution res = new ScaledResolution(mc);
-			int width = res.getScaledWidth();
-			int height = res.getScaledHeight();
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+
+/**
+ * @author The_Fireplace
+ */
+public class GuiClockMoving extends GuiScreen {
+	private boolean mouseDown = false;
+	private static final int mouseOffset = 8;
+
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks){
+		super.drawScreen(mouseX, mouseY, partialTicks);
+
+		glEnable(32826);
+		GlStateManager.pushMatrix();
+
+		RenderHelper.enableGUIStandardItemLighting();
+
+		if(mouseDown){
+			GlStateManager.enableBlend();
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 0.5F);
+			//render transparent clock
 			String d2 = ConfigValues.FORMAT;
 			if (ConfigValues.REAL) {
 				if (d2.contains("MONTH"))
@@ -57,7 +73,7 @@ public class ClientEvents {
 						d2 = d2.replace("SS", second);
 				}
 				if (d2.contains("NAME"))
-					d2 = d2.replace("NAME", getMonthForInt(Calendar.getInstance().get(Calendar.MONTH)));
+					d2 = d2.replace("NAME", ClientEvents.getMonthForInt(Calendar.getInstance().get(Calendar.MONTH)));
 				if (d2.contains("ZZ")) {
 					if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > 11)
 						d2 = d2.replace("ZZ", "PM");
@@ -182,61 +198,117 @@ public class ClientEvents {
 			if (d3.length > 1)
 				twoline=true;
 
-			int xPos = 0;
-			int xPos2 = 0;
-			int yPos = 0;
+			int screenX = mouseX-mouseOffset;
+			int screenY = mouseY-mouseOffset;
+			XJust xval;
+			if(screenX < width/3)
+				xval=XJust.LEFT;
+			else if(screenX > width/3*2)
+				xval=XJust.RIGHT;
+			else
+				xval=XJust.CENTER;
 
-			switch(ConfigValues.XALIGNMENT){
-				case LEFT:
-					xPos = ConfigValues.CLOCKX;
-					if(twoline)
-						xPos2=xPos;
+			int xPos = screenX;
+			int xPos2 = xPos;
+			int yPos = screenY;
+			if(twoline)
+			switch(xval){
+				case LEFT:default:
 					break;
 				case RIGHT:
-					xPos = width-ConfigValues.CLOCKX;
-					if(twoline)
-						xPos2 = xPos+mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]);
+					xPos2 = xPos+mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]);
 					break;
 				case CENTER:
-					xPos = width/2+ ConfigValues.CLOCKX;
-					if(twoline)
-						xPos2 = xPos+(mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]))/2;
+					xPos2 = xPos+(mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]))/2;
 			}
 
-			switch(ConfigValues.YALIGNMENT){
-				case TOP:
-					yPos = ConfigValues.CLOCKY;
-					break;
-				case BOTTOM:
-					yPos = height-ConfigValues.CLOCKY;
-					break;
-				case CENTER:
-					yPos = height/2+ConfigValues.CLOCKY;
-			}
-			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], xPos, yPos, Color.WHITE.getRGB());
+			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], xPos, yPos, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
 			if(twoline)
-				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], xPos2, yPos + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, Color.WHITE.getRGB());
+				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], xPos2, yPos + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
+
+			GlStateManager.resetColor();
+			GlStateManager.disableBlend();
 		}
+
+		RenderHelper.disableStandardItemLighting();
+		glDisable(GL12.GL_RESCALE_NORMAL);
+		glEnable(32826);
+		GlStateManager.popMatrix();
 	}
-	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-		if(eventArgs.getModID().equals(TimeHud.MODID))
-			TimeHud.syncConfig();
-	}
-	private boolean hasClock(){
-		for(ItemStack stack:Minecraft.getMinecraft().player.inventory.mainInventory)
-			if(stack != null)
-				if(stack.getItem().equals(Items.CLOCK))
-					return true;
-		return false;
-	}
-	public static String getMonthForInt(int num) {
-		String month = "wrong";
-		DateFormatSymbols dfs = new DateFormatSymbols();
-		String[] months = dfs.getMonths();
-		if (num >= 0 && num <= 11 ) {
-			month = months[num];
+
+	@Override
+	protected void mouseReleased(int mouseX, int mouseY, int state)
+	{
+		ScaledResolution res = new ScaledResolution(mc);
+		int width = res.getScaledWidth();
+		int height = res.getScaledHeight();
+		int screenX = mouseX-mouseOffset;
+		int screenY = mouseY-mouseOffset;
+		int finalX;
+		int finalY;
+		XJust xval;
+		YJust yval;
+		if(screenX < width/3)
+			xval=XJust.LEFT;
+		else if(screenX > width/3*2)
+			xval=XJust.RIGHT;
+		else
+			xval=XJust.CENTER;
+		if(screenY < height/3)
+			yval=YJust.TOP;
+		else if(screenY > height/3*2)
+			yval=YJust.BOTTOM;
+		else
+			yval=YJust.CENTER;
+
+		switch(xval){
+			case LEFT:default:
+				finalX=screenX;
+				break;
+			case CENTER:
+				finalX=screenX-width/2;
+				break;
+			case RIGHT:
+				finalX=width-screenX;
 		}
-		return month;
+		switch(yval){
+			case TOP:default:
+				finalY=screenY;
+				break;
+			case CENTER:
+				finalY=screenY-height/2;
+				break;
+			case BOTTOM:
+				finalY=height-screenY;
+		}
+		TimeHud.CLOCKX_PROPERTY.set(finalX);
+		TimeHud.CLOCKY_PROPERTY.set(finalY);
+		TimeHud.XALIGNMENT_PROPERTY.set(xval.name());
+		TimeHud.YALIGNMENT_PROPERTY.set(yval.name());
+		TimeHud.syncConfig();
+		mouseDown = false;
+		super.mouseReleased(mouseX, mouseY, state);
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+	{
+		mouseDown = true;
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
+	{
+		if (keyCode == mc.gameSettings.keyBindInventory.getKeyCode() || keyCode == Keyboard.KEY_RETURN || keyCode == TimeHud.instance.keyHandler.getKeyCode(KeyHandler.MOVECLOCK))
+		{
+			this.mc.displayGuiScreen(null);
+
+			if (this.mc.currentScreen == null)
+			{
+				this.mc.setIngameFocus();
+			}
+		}
+		super.keyTyped(typedChar, keyCode);
 	}
 }
