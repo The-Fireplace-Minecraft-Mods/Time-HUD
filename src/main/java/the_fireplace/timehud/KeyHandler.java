@@ -6,7 +6,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
-import the_fireplace.timehud.gui.GuiClockMoving;
+import the_fireplace.timehud.render.GuiClockMoving;
 
 /**
  * @author The_Fireplace

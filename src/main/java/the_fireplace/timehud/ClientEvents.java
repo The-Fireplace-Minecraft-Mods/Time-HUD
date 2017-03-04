@@ -9,7 +9,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import the_fireplace.timehud.config.ConfigValues;
-import the_fireplace.timehud.gui.GuiClockMoving;
+import the_fireplace.timehud.render.GuiClockMoving;
 
 import java.awt.*;
 import java.text.DateFormatSymbols;
@@ -195,12 +195,12 @@ public class ClientEvents {
 				case RIGHT:
 					xPos = width-ConfigValues.CLOCKX;
 					if(twoline)
-						xPos2 = xPos+mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]);
+						xPos2 = xPos+TimeHud.hudFR.getStringWidth(d3[0])-TimeHud.hudFR.getStringWidth(d3[1]);
 					break;
 				case CENTER:
 					xPos = width/2+ ConfigValues.CLOCKX;
 					if(twoline)
-						xPos2 = xPos+(mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]))/2;
+						xPos2 = xPos+(TimeHud.hudFR.getStringWidth(d3[0])-TimeHud.hudFR.getStringWidth(d3[1]))/2;
 			}
 
 			switch(ConfigValues.YALIGNMENT){
@@ -213,9 +213,9 @@ public class ClientEvents {
 				case CENTER:
 					yPos = height/2+ConfigValues.CLOCKY;
 			}
-			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], xPos, yPos, Color.WHITE.getRGB());
+			TimeHud.hudFR.drawStringWithShadow(d3[0], xPos, yPos, Color.WHITE.getRGB());
 			if(twoline)
-				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], xPos2, yPos + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, Color.WHITE.getRGB());
+				TimeHud.hudFR.drawStringWithShadow(d3[1], xPos2, yPos + ConfigValues.FS + ConfigValues.FS/3, Color.WHITE.getRGB());
 		}
 	}
 	@SubscribeEvent

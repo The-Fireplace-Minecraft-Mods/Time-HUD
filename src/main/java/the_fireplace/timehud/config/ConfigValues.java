@@ -31,4 +31,8 @@ public class ConfigValues {
 	public static final YJust YALIGNMENT_DEFAULT = YJust.TOP;
 	public static YJust YALIGNMENT;
 	public static final String YALIGNMENT_NAME = "cfg.yalignment";
+
+	public static final int FS_DEFAULT = 9;
+	public static int FS;
+	public static final String FS_NAME = "cfg.fs";
 }
