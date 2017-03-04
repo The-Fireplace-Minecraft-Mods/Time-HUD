@@ -31,4 +31,8 @@ public class ConfigValues {
 	public static final YJust YALIGNMENT_DEFAULT = YJust.TOP;
 	public static YJust YALIGNMENT;
 	public static final String YALIGNMENT_NAME = "cfg.yalignment";
+
+	public static final double FONTSCALE_DEFAULT = 1.0D;
+	public static double FONTSCALE;
+	public static final String FONTSCALE_NAME = "cfg.fontscale";
 }

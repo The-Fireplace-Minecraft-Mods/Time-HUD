@@ -34,6 +34,7 @@ public class TimeHud {
 	public static Property CLOCKY_PROPERTY;
 	public static Property XALIGNMENT_PROPERTY;
 	public static Property YALIGNMENT_PROPERTY;
+	public static Property FONTSCALE_PROPERTY;
 
 	public static void syncConfig(){
 		ConfigValues.FORMAT = FORMAT_PROPERTY.getString();
@@ -43,6 +44,7 @@ public class TimeHud {
 		ConfigValues.CLOCKY = CLOCKY_PROPERTY.getInt();
 		ConfigValues.XALIGNMENT = XJust.valueOf(XALIGNMENT_PROPERTY.getString());
 		ConfigValues.YALIGNMENT = YJust.valueOf(YALIGNMENT_PROPERTY.getString());
+		ConfigValues.FONTSCALE = FONTSCALE_PROPERTY.getDouble();
 
 		if(config.hasChanged())
 			config.save();
@@ -59,6 +61,9 @@ public class TimeHud {
 		CLOCKY_PROPERTY = config.get("hidden", ConfigValues.CLOCKY_NAME, ConfigValues.CLOCKY_DEFAULT, I18n.format(ConfigValues.CLOCKY_NAME+".tooltip"));
 		XALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.XALIGNMENT_NAME, ConfigValues.XALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.XALIGNMENT_NAME+".tooltip"));
 		YALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.YALIGNMENT_NAME, ConfigValues.YALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.YALIGNMENT_NAME+".tooltip"));
+		FONTSCALE_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FONTSCALE_NAME, ConfigValues.FONTSCALE_DEFAULT, I18n.format(ConfigValues.FONTSCALE_NAME+".tooltip"));
+		FONTSCALE_PROPERTY.setMinValue(0);
+		FONTSCALE_PROPERTY.setMaxValue(10);
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);
 		syncConfig();
 		//Example: 10:45:35 PM December 17, 2015
