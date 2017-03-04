@@ -12,9 +12,6 @@ cfg.xalignment=X Alignment
 cfg.xalignment.tooltip=The justification used to align the clock's X value, useful when resizing the screen
 cfg.yalignment=Y Alignment
 cfg.yalignment.tooltip=The justification used to align the clock's Y value, useful when resizing the screen
-cfg.fs=Font Size
-cfg.fs.tooltip=The HUD Font Size
-
 key.moveclock.desc=Open the Time HUD movement screen
 key.timehud.category=Time HUD
 

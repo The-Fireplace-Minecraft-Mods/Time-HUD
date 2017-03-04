@@ -1,4 +1,4 @@
-package the_fireplace.timehud.render;
+package the_fireplace.timehud.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -216,15 +216,15 @@ public class GuiClockMoving extends GuiScreen {
 				case LEFT:default:
 					break;
 				case RIGHT:
-					xPos2 = xPos+TimeHud.hudFR.getStringWidth(d3[0])-TimeHud.hudFR.getStringWidth(d3[1]);
+					xPos2 = xPos+mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]);
 					break;
 				case CENTER:
-					xPos2 = xPos+(TimeHud.hudFR.getStringWidth(d3[0])-TimeHud.hudFR.getStringWidth(d3[1]))/2;
+					xPos2 = xPos+(mc.fontRenderer.getStringWidth(d3[0])-mc.fontRenderer.getStringWidth(d3[1]))/2;
 			}
 
-			TimeHud.hudFR.drawStringWithShadow(d3[0], xPos, yPos, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
+			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], xPos, yPos, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
 			if(twoline)
-				TimeHud.hudFR.drawStringWithShadow(d3[1], xPos2, yPos + ConfigValues.FS + ConfigValues.FS/3, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
+				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], xPos2, yPos + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3, (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
 
 			GlStateManager.resetColor();
 			GlStateManager.disableBlend();

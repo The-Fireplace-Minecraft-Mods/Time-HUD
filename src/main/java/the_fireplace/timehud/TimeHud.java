@@ -1,20 +1,17 @@
 package the_fireplace.timehud;
 
 import com.google.common.collect.Maps;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.timehud.config.ConfigValues;
 import the_fireplace.timehud.config.FormatEntries;
 import the_fireplace.timehud.config.XJust;
 import the_fireplace.timehud.config.YJust;
-import the_fireplace.timehud.render.HUDFontRenderer;
 
 import java.util.Map;
 
@@ -27,7 +24,6 @@ public class TimeHud {
 	public static TimeHud instance;
 
 	public static Map<Object, String> formats = Maps.newHashMap();
-	public static FontRenderer hudFR;
 	public KeyHandler keyHandler;
 
 	public static Configuration config;
@@ -38,7 +34,6 @@ public class TimeHud {
 	public static Property CLOCKY_PROPERTY;
 	public static Property XALIGNMENT_PROPERTY;
 	public static Property YALIGNMENT_PROPERTY;
-	public static Property FS_PROPERTY;
 
 	public static void syncConfig(){
 		ConfigValues.FORMAT = FORMAT_PROPERTY.getString();
@@ -48,7 +43,6 @@ public class TimeHud {
 		ConfigValues.CLOCKY = CLOCKY_PROPERTY.getInt();
 		ConfigValues.XALIGNMENT = XJust.valueOf(XALIGNMENT_PROPERTY.getString());
 		ConfigValues.YALIGNMENT = YJust.valueOf(YALIGNMENT_PROPERTY.getString());
-		ConfigValues.FS = FS_PROPERTY.getInt();
 
 		if(config.hasChanged())
 			config.save();
@@ -65,7 +59,6 @@ public class TimeHud {
 		CLOCKY_PROPERTY = config.get("hidden", ConfigValues.CLOCKY_NAME, ConfigValues.CLOCKY_DEFAULT, I18n.format(ConfigValues.CLOCKY_NAME+".tooltip"));
 		XALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.XALIGNMENT_NAME, ConfigValues.XALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.XALIGNMENT_NAME+".tooltip"));
 		YALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.YALIGNMENT_NAME, ConfigValues.YALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.YALIGNMENT_NAME+".tooltip"));
-		FS_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FS_NAME, ConfigValues.FS_DEFAULT, I18n.format(ConfigValues.FS_NAME+".tooltip"));
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);
 		syncConfig();
 		//Example: 10:45:35 PM December 17, 2015
@@ -109,10 +102,5 @@ public class TimeHud {
 
 		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 		MinecraftForge.EVENT_BUS.register(keyHandler = new KeyHandler());
-	}
-
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event){
-		hudFR = new HUDFontRenderer();
 	}
 }
