@@ -15,7 +15,10 @@ cfg.yalignment.tooltip=The justification used to align the clock's Y value, usef
 cfg.fontscale=Font Scale Multiplier
 cfg.fontscale.tooltip=Allows you to change the size of the clock's font.
 key.moveclock.desc=Open the Time HUD movement screen
+key.pickcolor.desc=Pick Time HUD Color
 key.timehud.category=Time HUD
+
+gui.button.color=Pick Color
 
 january=January
 february=February
@@ -29,3 +32,5 @@ september=September
 october=October
 november=November
 december=December
+
+sample=Sample

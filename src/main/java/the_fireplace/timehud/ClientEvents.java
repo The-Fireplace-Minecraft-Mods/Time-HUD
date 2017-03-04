@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import the_fireplace.timehud.config.ConfigValues;
 import the_fireplace.timehud.gui.GuiClockMoving;
 
-import java.awt.*;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
@@ -217,9 +216,9 @@ public class ClientEvents {
 
 			GlStateManager.scale(ConfigValues.FONTSCALE, ConfigValues.FONTSCALE, 0);
 
-			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], (int)(xPos/ConfigValues.FONTSCALE), (int)(yPos/ConfigValues.FONTSCALE), Color.WHITE.getRGB());
+			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], (int)(xPos/ConfigValues.FONTSCALE), (int)(yPos/ConfigValues.FONTSCALE), ConfigValues.FONTCOLOR);
 			if(twoline)
-				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], (int)(xPos2/ConfigValues.FONTSCALE), (int)((yPos/ConfigValues.FONTSCALE) + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3), Color.WHITE.getRGB());
+				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], (int)(xPos2/ConfigValues.FONTSCALE), (int)((yPos/ConfigValues.FONTSCALE) + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3), ConfigValues.FONTCOLOR);
 		}
 	}
 	@SubscribeEvent

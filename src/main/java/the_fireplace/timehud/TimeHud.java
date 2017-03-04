@@ -35,6 +35,7 @@ public class TimeHud {
 	public static Property XALIGNMENT_PROPERTY;
 	public static Property YALIGNMENT_PROPERTY;
 	public static Property FONTSCALE_PROPERTY;
+	public static Property FONTCOLOR_PROPERTY;
 
 	public static void syncConfig(){
 		ConfigValues.FORMAT = FORMAT_PROPERTY.getString();
@@ -45,6 +46,7 @@ public class TimeHud {
 		ConfigValues.XALIGNMENT = XJust.valueOf(XALIGNMENT_PROPERTY.getString());
 		ConfigValues.YALIGNMENT = YJust.valueOf(YALIGNMENT_PROPERTY.getString());
 		ConfigValues.FONTSCALE = FONTSCALE_PROPERTY.getDouble();
+		ConfigValues.FONTCOLOR = FONTCOLOR_PROPERTY.getInt();
 
 		if(config.hasChanged())
 			config.save();
@@ -62,6 +64,7 @@ public class TimeHud {
 		XALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.XALIGNMENT_NAME, ConfigValues.XALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.XALIGNMENT_NAME+".tooltip"));
 		YALIGNMENT_PROPERTY = config.get("hidden", ConfigValues.YALIGNMENT_NAME, ConfigValues.YALIGNMENT_DEFAULT.name(), I18n.format(ConfigValues.YALIGNMENT_NAME+".tooltip"));
 		FONTSCALE_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.FONTSCALE_NAME, ConfigValues.FONTSCALE_DEFAULT, I18n.format(ConfigValues.FONTSCALE_NAME+".tooltip"));
+		FONTCOLOR_PROPERTY = config.get("hidden", ConfigValues.FONTCOLOR_NAME, ConfigValues.FONTCOLOR_DEFAULT, I18n.format(ConfigValues.FONTCOLOR_NAME+".tooltip"));
 		FONTSCALE_PROPERTY.setMinValue(0);
 		FONTSCALE_PROPERTY.setMaxValue(10);
 		FORMAT_PROPERTY.setConfigEntryClass(FormatEntries.class);

@@ -14,7 +14,6 @@ import the_fireplace.timehud.config.ConfigValues;
 import the_fireplace.timehud.config.XJust;
 import the_fireplace.timehud.config.YJust;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -224,9 +223,9 @@ public class GuiClockMoving extends GuiScreen {
 
 			GlStateManager.scale(ConfigValues.FONTSCALE, ConfigValues.FONTSCALE, 0);
 
-			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], (int)(xPos/ConfigValues.FONTSCALE), (int)(yPos/ConfigValues.FONTSCALE), (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
+			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], (int)(xPos/ConfigValues.FONTSCALE), (int)(yPos/ConfigValues.FONTSCALE), (255/2 << 24) | (ConfigValues.FONTCOLOR&0x00ffffff));
 			if(twoline)
-				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], (int)(xPos2/ConfigValues.FONTSCALE), (int)((yPos/ConfigValues.FONTSCALE) + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3), (255/2 << 24) | (Color.WHITE.getRGB()&0x00ffffff));
+				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], (int)(xPos2/ConfigValues.FONTSCALE), (int)((yPos/ConfigValues.FONTSCALE) + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3), (255/2 << 24) | (ConfigValues.FONTCOLOR&0x00ffffff));
 
 			GlStateManager.resetColor();
 			GlStateManager.disableBlend();

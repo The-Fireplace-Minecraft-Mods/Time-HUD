@@ -1,5 +1,7 @@
 package the_fireplace.timehud.config;
 
+import java.awt.*;
+
 /**
  * @author The_Fireplace
  */
@@ -35,4 +37,8 @@ public class ConfigValues {
 	public static final double FONTSCALE_DEFAULT = 1.0D;
 	public static double FONTSCALE;
 	public static final String FONTSCALE_NAME = "cfg.fontscale";
+
+	public static final int FONTCOLOR_DEFAULT = Color.WHITE.getRGB();
+	public static int FONTCOLOR;
+	public static final String FONTCOLOR_NAME = "cfg.fontcolor";
 }
