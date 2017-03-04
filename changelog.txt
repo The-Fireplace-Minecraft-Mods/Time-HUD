@@ -1,2 +1,1 @@
-You can now drag and drop the Time HUD where you want it. Anywhere on the screen!
-You can now change the Size and Color of the Time HUD.
+Fixed scaling affecting GUI elements from other mods, such as UHC-Compass

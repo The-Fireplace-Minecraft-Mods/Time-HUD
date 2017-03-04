@@ -219,6 +219,8 @@ public class ClientEvents {
 			mc.ingameGUI.drawString(mc.fontRenderer, d3[0], (int)(xPos/ConfigValues.FONTSCALE), (int)(yPos/ConfigValues.FONTSCALE), ConfigValues.FONTCOLOR);
 			if(twoline)
 				mc.ingameGUI.drawString(mc.fontRenderer, d3[1], (int)(xPos2/ConfigValues.FONTSCALE), (int)((yPos/ConfigValues.FONTSCALE) + mc.fontRenderer.FONT_HEIGHT + mc.fontRenderer.FONT_HEIGHT/3), ConfigValues.FONTCOLOR);
+
+			GlStateManager.scale(1, 1, 1);//Reset scale so you don't interfere with other mods doing rendering here.
 		}
 	}
 	@SubscribeEvent
