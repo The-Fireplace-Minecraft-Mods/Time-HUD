@@ -15,7 +15,7 @@ import the_fireplace.timehud.config.YJust;
 
 import java.util.Map;
 
-@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/timehud.json", acceptedMinecraftVersions = "[1.11,)")
+@Mod(modid=TimeHud.MODID, name=TimeHud.MODNAME, guiFactory = "the_fireplace.timehud.config.TimeHudGuiFactory", clientSideOnly=true, canBeDeactivated = true, updateJSON = "https://bitbucket.org/The_Fireplace/minecraft-mod-updates/raw/master/timehud.json", acceptedMinecraftVersions = "[1.11.2,)")
 public class TimeHud {
 	public static final String MODID="timehud";
 	public static final String MODNAME="Time HUD";
@@ -108,7 +108,6 @@ public class TimeHud {
 		formats.put("24HH:MM, DATE/MONTH/YEAR","22:45, 17/12/2015");
 		formats.put("12HH:MM ZZ, DATE/MONTH/YEAR","10:45 PM, 17/12/2015");
 
-		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 		MinecraftForge.EVENT_BUS.register(keyHandler = new KeyHandler());
 	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import the_fireplace.timehud.config.ConfigValues;
@@ -15,9 +16,10 @@ import the_fireplace.timehud.gui.GuiClockMoving;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
+@Mod.EventBusSubscriber(modid = TimeHud.MODID)
 public class ClientEvents {
 	@SubscribeEvent
-	public void guiRender(TickEvent.RenderTickEvent t){
+	public static void guiRender(TickEvent.RenderTickEvent t){
 		Minecraft mc = Minecraft.getMinecraft();
 		if((mc.inGameHasFocus && !mc.gameSettings.showDebugInfo) || mc.currentScreen instanceof GuiClockMoving) {
 			if (ConfigValues.NEEDCLOCK && !hasClock())
@@ -224,11 +226,11 @@ public class ClientEvents {
 		}
 	}
 	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
+	public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
 		if(eventArgs.getModID().equals(TimeHud.MODID))
 			TimeHud.syncConfig();
 	}
-	private boolean hasClock(){
+	private static boolean hasClock(){
 		for(ItemStack stack:Minecraft.getMinecraft().player.inventory.mainInventory)
 			if(stack != null)
 				if(stack.getItem().equals(Items.CLOCK))

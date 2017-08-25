@@ -1,1 +1,1 @@
-Fixed scaling affecting GUI elements from other mods, such as UHC-Compass
+Updated to 1.12.1
