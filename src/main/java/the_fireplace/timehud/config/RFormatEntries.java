@@ -5,13 +5,11 @@ import net.minecraftforge.fml.client.config.GuiConfigEntries;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import the_fireplace.timehud.TimeHud;
 
-import java.util.HashMap;
-
 /**
  * @author The_Fireplace
  */
-public class FormatEntries extends GuiConfigEntries.SelectValueEntry {
-	public FormatEntries(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement configElement) {
-		super(owningScreen, owningEntryList, configElement, TimeHud.igformats);
+public class RFormatEntries extends GuiConfigEntries.SelectValueEntry {
+	public RFormatEntries(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement configElement) {
+		super(owningScreen, owningEntryList, configElement, TimeHud.formats);
 	}
 }

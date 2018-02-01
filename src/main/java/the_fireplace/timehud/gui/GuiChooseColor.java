@@ -21,17 +21,16 @@ import java.nio.IntBuffer;
 public class GuiChooseColor extends GuiScreen {
 	protected int xSize = 176;
 	protected int ySize = 110;
-	protected int guiLeft;
-	protected int guiTop;
+	protected int guiLeft, guiTop;
 
 	private int selectedColor = ConfigValues.FONTCOLOR;
-	private boolean colorPicking = false;
+	private int selectedColorR = ConfigValues.RFONTCOLOR;
+	private byte colorPicking = 0;
 	private IntBuffer screenPixels;
 
 	private static final ResourceLocation resource = new ResourceLocation(TimeHud.MODID, "textures/gui/guichoosecolor.png");
 
-	private GuiButton colorPick;
-	private GuiButton done;
+	private GuiButton colorPick, colorPickR, done;
 
 	public GuiChooseColor(){
 		super();
@@ -44,8 +43,9 @@ public class GuiChooseColor extends GuiScreen {
 	public void initGui() {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
-		buttonList.add(colorPick = new GuiButton(0, 124, 5, 60, 20, I18n.format("gui.button.color")));
-		buttonList.add(done = new GuiButton(1, 124, 85, 60, 20, I18n.format("gui.done")));
+		buttonList.add(colorPick = new GuiButton(0, 124, 5, 120, 20, I18n.format("gui.button.color")));
+		buttonList.add(colorPickR = new GuiButton(1, 124, 25, 120, 20, I18n.format("gui.button.rcolor")));
+		buttonList.add(done = new GuiButton(2, 124, 85, 60, 20, I18n.format("gui.done")));
 
 		super.initGui();
 	}
@@ -59,10 +59,19 @@ public class GuiChooseColor extends GuiScreen {
 					//Enable color pick mode
 					selectedColor =ConfigValues.FONTCOLOR;
 					colorPick.enabled=false;
+					colorPickR.enabled=false;
 					done.enabled=false;
-					colorPicking=true;
+					colorPicking=1;
 					break;
 				case 1:
+					//Enable color pick mode
+					selectedColorR =ConfigValues.RFONTCOLOR;
+					colorPick.enabled=false;
+					colorPickR.enabled=false;
+					done.enabled=false;
+					colorPicking=2;
+					break;
+				case 2:
 					mc.displayGuiScreen(null);
 					break;
 			}
@@ -73,6 +82,7 @@ public class GuiChooseColor extends GuiScreen {
 	public void onGuiClosed()
 	{
 		TimeHud.FONTCOLOR_PROPERTY.set(selectedColor);
+		TimeHud.RFONTCOLOR_PROPERTY.set(selectedColorR);
 		TimeHud.syncConfig();
 	}
 
@@ -80,8 +90,6 @@ public class GuiChooseColor extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		guiLeft = (width - xSize) / 2;
 		guiTop = (height - ySize) / 2;
-		int i = this.guiLeft;
-		int j = this.guiTop;
 		GlStateManager.translate(guiLeft, guiTop, 0.0f);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(resource);
@@ -93,6 +101,7 @@ public class GuiChooseColor extends GuiScreen {
 		super.drawScreen(mouseX-guiLeft, mouseY-guiTop, partialTicks);
 
 		drawString(mc.fontRenderer, I18n.format("sample"), 124, 45, selectedColor);
+		drawString(mc.fontRenderer, I18n.format("sampler"), 124, 53, selectedColorR);
 	}
 
 	@Override
@@ -104,11 +113,18 @@ public class GuiChooseColor extends GuiScreen {
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if (colorPicking && mouseButton == 0) {
+		if (colorPicking == 1 && mouseButton == 0) {
 			selectedColor = getPixelRGB(Mouse.getEventX(), Mouse.getEventY());
-			colorPicking=false;
+			colorPicking=0;
 			done.enabled=true;
 			colorPick.enabled=true;
+			colorPickR.enabled=true;
+		}else if (colorPicking == 2 && mouseButton == 0) {
+			selectedColorR = getPixelRGB(Mouse.getEventX(), Mouse.getEventY());
+			colorPicking=0;
+			done.enabled=true;
+			colorPick.enabled=true;
+			colorPickR.enabled=true;
 		}
 		super.mouseClicked(mouseX-guiLeft, mouseY-guiTop, mouseButton);
 	}
