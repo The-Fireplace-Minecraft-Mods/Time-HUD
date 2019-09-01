@@ -70,6 +70,7 @@ public class TimeHud {
 			config.save();
 	}
 
+	@SuppressWarnings("NoTranslation")
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Configuration(event.getSuggestedConfigurationFile());

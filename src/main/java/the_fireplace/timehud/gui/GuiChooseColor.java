@@ -17,7 +17,6 @@ import the_fireplace.timehud.config.ConfigValues;
 import java.io.IOException;
 import java.nio.IntBuffer;
 
-@SuppressWarnings("unchecked")
 public class GuiChooseColor extends GuiScreen {
 	protected int xSize = 176;
 	protected int ySize = 110;
